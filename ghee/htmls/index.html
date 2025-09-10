@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>동물 스트레스 음성 인식 프로젝트 - 종합 보고서</title>
+    <title>동물 스트레스 프로젝트 / 조 편성 도우미</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,7 @@
             background-color: #1a202c;
             padding: 2rem;
             margin: 0;
+            transition: background-color 0.5s ease;
         }
 
         .container {
@@ -24,6 +25,46 @@
             padding: 0 1rem;
         }
 
+        /* 탭 관련 스타일 */
+        .tab-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            background-color: #2d3748;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #a0aec0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tab-button.active {
+            background-color: #4c51bf;
+            color: #fff;
+        }
+
+        .tab-button:not(.active):hover {
+            background-color: #4a5568;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 기존 보고서 스타일 */
         .card {
             background-color: #2d3748;
             border-radius: 1.5rem;
@@ -104,102 +145,288 @@
         h1, h2, h3, h4, h5, h6 {
             color: #e2e8f0;
         }
+        
+        /* 조 편성기 스타일 */
+        .group-container {
+            background-color: #2d3748;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto;
+        }
+        
+        .group-container h1 {
+            color: #90cdf4;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        
+        .input-group label {
+            flex: 1;
+            text-align: left;
+            font-weight: bold;
+            color: #cbd5e0;
+        }
+        
+        .input-group input {
+            flex: 2;
+            padding: 0.5rem;
+            border: 1px solid #4a5568;
+            background-color: #1a202c;
+            color: #e2e8f0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        button {
+            padding: 0.75rem 1.5rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-top: 1.5rem;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        #group-result {
+            margin-top: 2rem;
+            text-align: left;
+            border-top: 1px solid #4a5568;
+            padding-top: 1rem;
+        }
+        
+        .group-item {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="hero-section">
-            <h1 class="hero-title">동물 스트레스 음성 인식 프로젝트 - 종합 보고서</h1>
-            <p class="hero-subtitle">컴퓨터 공학적 접근을 통한 사회 문제 해결 제안</p>
-        </header>
-
-        <hr style="border: none; border-top: 1px solid #4a5568; margin: 2rem 0;">
-
-        <div class="card">
-            <h2 class="section-title">요약 📝</h2>
-            <p>
-                본 보고서는 동물이 스트레스를 받을 때 나타내는 음향적 특징을 분석하고, 이를 AI 기술로 감지하는 프로젝트의 타당성과 구체적인 실행 방안을 제시합니다. 동물의 발성 변화를 통해 스트레스 상태를 비침습적으로 파악하는 것은 동물 복지를 넘어 공중보건, 경제 등 다양한 사회적 문제에 대한 혁신적인 해결책이 될 수 있습니다. 보고서에는 <strong>스트레스 시 발성 특징</strong>, <strong>선행 연구 및 데이터 자원</strong>, <strong>사회적 문제와의 연결성</strong>, <strong>고등학교 수준의 프로젝트 설계</strong>, 그리고 <strong>기대 효과와 한계</strong>가 포함되어 있습니다.
-            </p>
+        <div class="tab-bar">
+            <div class="tab-button active" onclick="showTab('report')">종합 보고서</div>
+            <div class="tab-button" onclick="showTab('group-maker')">조 편성 도우미</div>
         </div>
 
-        <div class="card">
-            <h2 class="section-title">1. 서론: 왜 소리인가? 👂</h2>
-            <p>
-                컴퓨터 공학은 단순히 기술 개발을 넘어, 사회적 난제에 대한 창의적 해결책을 제시하는 학문입니다. 이 보고서는 인간과 공존하는 동물들의 복지 문제, 특히 <strong>동물 스트레스</strong>에 주목합니다. 기존의 감시 카메라나 센서를 통한 행동 분석은 설치 비용이 높고 프라이버시 침해 소지가 있습니다. 반면, 동물의 소리를 분석하는 것은 동물에게 직접적인 접촉이나 제약을 가하지 않는 <strong>비침습적</strong>인 방법으로 스트레스 상태를 효과적으로 파악할 수 있는 대안입니다.
-            </p>
-            <p>
-                다수의 연구에 따르면, 동물은 스트레스를 받을 때 음높이, 소리 강도, 발성 패턴 등에 뚜렷한 변화를 보입니다. 이러한 음향적 특징을 정량화하여 AI 모델에 학습시키면 동물의 감정 상태를 객관적으로 파악할 수 있습니다. 본 프로젝트는 이 가능성을 현실화하기 위한 구체적인 로드맵을 제시합니다.
-            </p>
+        <div id="report" class="tab-content active">
+            <header class="hero-section">
+                <h1 class="hero-title">동물 스트레스 음성 인식 프로젝트 - 종합 보고서</h1>
+                <p class="hero-subtitle">컴퓨터 공학적 접근을 통한 사회 문제 해결 제안</p>
+            </header>
+
+            <hr style="border: none; border-top: 1px solid #4a5568; margin: 2rem 0;">
+
+            <div class="card">
+                <h2 class="section-title">요약 📝</h2>
+                <p>
+                    본 보고서는 동물이 스트레스를 받을 때 나타내는 음향적 특징을 분석하고, 이를 AI 기술로 감지하는 프로젝트의 타당성과 구체적인 실행 방안을 제시합니다. 동물의 발성 변화를 통해 스트레스 상태를 비침습적으로 파악하는 것은 동물 복지를 넘어 공중보건, 경제 등 다양한 사회적 문제에 대한 혁신적인 해결책이 될 수 있습니다. 보고서에는 <strong>스트레스 시 발성 특징</strong>, <strong>선행 연구 및 데이터 자원</strong>, <strong>사회적 문제와의 연결성</strong>, <strong>고등학교 수준의 프로젝트 설계</strong>, 그리고 <strong>기대 효과와 한계</strong>가 포함되어 있습니다.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title">1. 서론: 왜 소리인가? 👂</h2>
+                <p>
+                    컴퓨터 공학은 단순히 기술 개발을 넘어, 사회적 난제에 대한 창의적 해결책을 제시하는 학문입니다. 이 보고서는 인간과 공존하는 동물들의 복지 문제, 특히 <strong>동물 스트레스</strong>에 주목합니다. 기존의 감시 카메라나 센서를 통한 행동 분석은 설치 비용이 높고 프라이버시 침해 소지가 있습니다. 반면, 동물의 소리를 분석하는 것은 동물에게 직접적인 접촉이나 제약을 가하지 않는 <strong>비침습적</strong>인 방법으로 스트레스 상태를 효과적으로 파악할 수 있는 대안입니다.
+                </p>
+                <p>
+                    다수의 연구에 따르면, 동물은 스트레스를 받을 때 음높이, 소리 강도, 발성 패턴 등에 뚜렷한 변화를 보입니다. 이러한 음향적 특징을 정량화하여 AI 모델에 학습시키면 동물의 감정 상태를 객관적으로 파악할 수 있습니다. 본 프로젝트는 이 가능성을 현실화하기 위한 구체적인 로드맵을 제시합니다.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title">2. 이론적 배경 및 선행 연구 📊</h2>
+                <h3 class="sub-heading">2.1 스트레스 시 동물 발성의 특징</h3>
+                <p>
+                    동물의 스트레스성 발성은 종을 불문하고 몇 가지 공통적인 음향적 특징을 보입니다.
+                </p>
+                <ul>
+                    <li class="list-item"><strong>음높이 상승:</strong> 불안, 공포와 같은 부정적 감정 상태에서 소리의 기본 주파수($F_0$)가 높아집니다. 예를 들어, 병아리는 고립되었을 때 더 높은 음높이로 웁니다.</li>
+                    <li class="list-item"><strong>소리 강도 증가:</strong> 스트레스 상황에서는 소리를 더 크게 내는 경향이 있습니다.</li>
+                    <li class="list-item"><strong>비선형적 잡음:</strong> 불안이나 높은 각성 상태에서 소리의 음색이 거칠어지고 불규칙한 잡음 성분(nonlinear phenomena)이 증가합니다. 이는 개의 낑낑거림이나 돼지의 비명에서 두드러집니다.</li>
+                    <li class="list-item"><strong>반복성 증가:</strong> 스트레스 상황에서 울음소리를 더 자주, 그리고 반복적으로 내는 경향이 있습니다.</li>
+                </ul>
+
+                <h3 class="sub-heading">2.2 관련 연구 및 기술 사례</h3>
+                <p>
+                    이미 여러 연구 기관에서 동물 음성 분석을 통한 감정 파악에 성공했습니다.
+                </p>
+                <ul>
+                    <li class="list-item"><strong>돼지:</strong> 덴마크 코펜하겐 대학 연구팀은 7,414개의 돼지 발성 데이터를 AI에 학습시켜, 돼지의 감정 상태를 92%의 정확도로 판별했습니다.</li>
+                    <li class="list-item"><strong>닭:</strong> 한 연구에서는 CNN(합성곱 신경망) 모델을 사용해 닭의 스트레스성 경보 울음소리를 95% 이상의 정확도로 분류했습니다. 이는 대규모 축사 환경 모니터링에 활용될 수 있음을 보여줍니다.</li>
+                    <li class="list-item"><strong>개:</strong> 미시간 대학 연구팀은 사람의 음성 인식 모델(Wav2Vec2)을 활용해 개의 짖는 소리를 분석, 감정 상태를 70% 이상 정확도로 구분하는 데 성공했습니다.</li>
+                </ul>
+
+                <h3 class="sub-heading">2.3 활용 가능한 공개 데이터셋</h3>
+                <p>
+                    프로젝트를 위한 학습 데이터는 다양한 온라인 데이터베이스에서 확보할 수 있습니다.
+                </p>
+                <ul>
+                    <li class="list-item"><strong>Zenodo:</strong> 고양이 울음소리를 모은 'CatMeows' 데이터셋 등 다양한 학술 자료가 있습니다.</li>
+                    <li class="list-item"><strong>Xeno-canto:</strong> 전 세계 연구자들이 공유하는 방대한 조류 및 포유류 발성 데이터베이스입니다.</li>
+                    <li class="list-item"><strong>Kaggle & Freesound.org:</strong> 'Audio Cats and Dogs'와 같은 데이터셋이나 CC 라이선스 기반의 사운드 샘플을 얻을 수 있습니다.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title">3. 사회적 문제와 연결성 🌍</h2>
+                <p>
+                    동물의 스트레스는 단순히 개체의 고통에 머무르지 않고, 다음과 같은 광범위한 사회적 문제로 이어집니다. 본 프로젝트는 이 문제들에 대한 실질적인 해결책을 제공할 수 있습니다.
+                </p>
+                <ul>
+                    <li class="list-item"><strong>공중보건:</strong> 스트레스로 면역력이 저하된 가축은 질병에 취약해지며, 이는 항생제 사용 증가와 <strong>항생제 내성(AMR)</strong> 문제로 이어집니다. AI 기반 스트레스 감지 시스템은 조기 개입을 통해 항생제 사용을 줄이는 데 기여할 수 있습니다.</li>
+                    <li class="list-item"><strong>경제적 손실:</strong> 스트레스는 가축의 성장률과 번식률을 낮추고 폐사율을 높여 농가에 막대한 경제적 손실을 야기합니다.</li>
+                    <li class="list-item"><strong>윤리 및 사회적 갈등:</strong> 동물 스트레스와 복지 문제는 소비자들의 윤리적 소비 기준을 높이고, 이웃 간 소음 갈등이나 반려동물 유기 문제로 이어져 사회적 비용을 증가시킵니다.</li>
+                </ul>
+
+                <h2 class="section-title">4. 제안 프로젝트 설계 (고등학교 수준) 🔬</h2>
+                <p>
+                    본 프로젝트는 특정 동물(예: 반려견)을 대상으로 '스트레스 vs 비스트레스'를 분류하는 AI 모델을 개발하는 것을 목표로 합니다.
+                </p>
+                <h3 class="sub-heading">4.1 데이터 수집 및 전처리</h3>
+                <p>
+                    지향성 마이크를 사용하여 반려견의 다양한 상황(안정 시, 낯선 사람/소리 노출 시 등)에서의 소리를 녹음합니다. 수집된 오디오는 잡음 제거, 정규화 과정을 거쳐 멜-스펙트로그램과 같은 시각적 특징으로 변환합니다. 이는 AI 모델이 분석하기 용이한 형태로 데이터를 가공하는 과정입니다.
+                </p>
+                <h3 class="sub-heading">4.2 모델 설계 및 평가</h3>
+                <p>
+                    변환된 멜-스펙트로그램 이미지를 입력으로 받는 <strong>CNN(합성곱 신경망)</strong> 모델을 설계하여 학습시킵니다. 학습 후에는 정확도(Accuracy), 정밀도(Precision), 재현율(Recall) 등 다양한 지표를 활용하여 모델의 성능을 객관적으로 평가합니다.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title">5. 결론 및 기대 효과 🚀</h2>
+                <p>
+                    이 프로젝트는 컴퓨터 공학 전공자가 동물 복지라는 사회적 문제에 어떻게 기여할 수 있는지 보여주는 좋은 사례가 될 것입니다. 비록 소음, 개체별 발성 차이와 같은 한계가 존재하지만, 동물 스트레스에 대한 <strong>조기경보 시스템</strong>을 구축하여 질병 예방, 항생제 사용 감소, 그리고 더 나아가 동물 복지 개선에 실질적인 도움을 줄 수 있습니다. 이 보고서는 단순한 학술적 탐구를 넘어, <strong>기술과 따뜻한 관심이 결합될 때 세상이 어떻게 더 나은 방향으로 변화할 수 있는지</strong>에 대한 비전을 제시합니다.
+                </p>
+                <p>
+                    다음 단계로, 특정 동물을 선정하여 파일럿 데이터 수집을 시작하고, 베이스라인 모델을 구축하는 실험을 진행할 것을 제안합니다.
+                </p>
+            </div>
         </div>
 
-        <div class="card">
-            <h2 class="section-title">2. 이론적 배경 및 선행 연구 📊</h2>
-            <h3 class="sub-heading">2.1 스트레스 시 동물 발성의 특징</h3>
-            <p>
-                동물의 스트레스성 발성은 종을 불문하고 몇 가지 공통적인 음향적 특징을 보입니다.
-            </p>
-            <ul>
-                <li class="list-item"><strong>음높이 상승:</strong> 불안, 공포와 같은 부정적 감정 상태에서 소리의 기본 주파수(F<sub>0</sub>)가 높아집니다. 예를 들어, 병아리는 고립되었을 때 더 높은 음높이로 웁니다.</li>
-                <li class="list-item"><strong>소리 강도 증가:</strong> 스트레스 상황에서는 소리를 더 크게 내는 경향이 있습니다.</li>
-                <li class="list-item"><strong>비선형적 잡음:</strong> 불안이나 높은 각성 상태에서 소리의 음색이 거칠어지고 불규칙한 잡음 성분(nonlinear phenomena)이 증가합니다. 이는 개의 낑낑거림이나 돼지의 비명에서 두드러집니다.</li>
-                <li class="list-item"><strong>반복성 증가:</strong> 스트레스 상황에서 울음소리를 더 자주, 그리고 반복적으로 내는 경향이 있습니다.</li>
-            </ul>
+        <div id="group-maker" class="tab-content">
+            <div class="group-container">
+                <h1>학생 조 편성 도우미 👨‍🎓</h1>
+                <p>학생 1번부터 20번까지 조를 편성해 드립니다. 두 개의 시드값을 입력하세요.</p>
+                
+                <div class="input-group">
+                    <label for="seed1">첫 번째 시드 (1~100):</label>
+                    <input type="number" id="seed1" min="1" max="100" value="1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="seed2">두 번째 시드 (1~100):</label>
+                    <input type="number" id="seed2" min="1" max="100" value="1">
+                </div>
 
-            <h3 class="sub-heading">2.2 관련 연구 및 기술 사례</h3>
-            <p>
-                이미 여러 연구 기관에서 동물 음성 분석을 통한 감정 파악에 성공했습니다.
-            </p>
-            <ul>
-                <li class="list-item"><strong>돼지:</strong> 덴마크 코펜하겐 대학 연구팀은 7,414개의 돼지 발성 데이터를 AI에 학습시켜, 돼지의 감정 상태를 92%의 정확도로 판별했습니다.</li>
-                <li class="list-item"><strong>닭:</strong> 한 연구에서는 CNN(합성곱 신경망) 모델을 사용해 닭의 스트레스성 경보 울음소리를 95% 이상의 정확도로 분류했습니다. 이는 대규모 축사 환경 모니터링에 활용될 수 있음을 보여줍니다.</li>
-                <li class="list-item"><strong>개:</strong> 미시간 대학 연구팀은 사람의 음성 인식 모델(Wav2Vec2)을 활용해 개의 짖는 소리를 분석, 감정 상태를 70% 이상 정확도로 구분하는 데 성공했습니다.</li>
-            </ul>
+                <button onclick="generateGroups()">조 편성하기</button>
 
-            <h3 class="sub-heading">2.3 활용 가능한 공개 데이터셋</h3>
-            <p>
-                프로젝트를 위한 학습 데이터는 다양한 온라인 데이터베이스에서 확보할 수 있습니다.
-            </p>
-            <ul>
-                <li class="list-item"><strong>Zenodo:</strong> 고양이 울음소리를 모은 'CatMeows' 데이터셋 등 다양한 학술 자료가 있습니다.</li>
-                <li class="list-item"><strong>Xeno-canto:</strong> 전 세계 연구자들이 공유하는 방대한 조류 및 포유류 발성 데이터베이스입니다.</li>
-                <li class="list-item"><strong>Kaggle & Freesound.org:</strong> 'Audio Cats and Dogs'와 같은 데이터셋이나 CC 라이선스 기반의 사운드 샘플을 얻을 수 있습니다.</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2 class="section-title">3. 사회적 문제와 연결성 🌍</h2>
-            <p>
-                동물의 스트레스는 단순히 개체의 고통에 머무르지 않고, 다음과 같은 광범위한 사회적 문제로 이어집니다. 본 프로젝트는 이 문제들에 대한 실질적인 해결책을 제공할 수 있습니다.
-            </p>
-            <ul>
-                <li class="list-item"><strong>공중보건:</strong> 스트레스로 면역력이 저하된 가축은 질병에 취약해지며, 이는 항생제 사용 증가와 <strong>항생제 내성(AMR)</strong> 문제로 이어집니다. AI 기반 스트레스 감지 시스템은 조기 개입을 통해 항생제 사용을 줄이는 데 기여할 수 있습니다.</li>
-                <li class="list-item"><strong>경제적 손실:</strong> 스트레스는 가축의 성장률과 번식률을 낮추고 폐사율을 높여 농가에 막대한 경제적 손실을 야기합니다.</li>
-                <li class="list-item"><strong>윤리 및 사회적 갈등:</strong> 동물 스트레스와 복지 문제는 소비자들의 윤리적 소비 기준을 높이고, 이웃 간 소음 갈등이나 반려동물 유기 문제로 이어져 사회적 비용을 증가시킵니다.</li>
-            </ul>
-
-            <h2 class="section-title">4. 제안 프로젝트 설계 (고등학교 수준) 🔬</h2>
-            <p>
-                본 프로젝트는 특정 동물(예: 반려견)을 대상으로 '스트레스 vs 비스트레스'를 분류하는 AI 모델을 개발하는 것을 목표로 합니다.
-            </p>
-            <h3 class="sub-heading">4.1 데이터 수집 및 전처리</h3>
-            <p>
-                지향성 마이크를 사용하여 반려견의 다양한 상황(안정 시, 낯선 사람/소리 노출 시 등)에서의 소리를 녹음합니다. 수집된 오디오는 잡음 제거, 정규화 과정을 거쳐 멜-스펙트로그램과 같은 시각적 특징으로 변환합니다. 이는 AI 모델이 분석하기 용이한 형태로 데이터를 가공하는 과정입니다.
-            </p>
-            <h3 class="sub-heading">4.2 모델 설계 및 평가</h3>
-            <p>
-                변환된 멜-스펙트로그램 이미지를 입력으로 받는 <strong>CNN(합성곱 신경망)</strong> 모델을 설계하여 학습시킵니다. 학습 후에는 정확도(Accuracy), 정밀도(Precision), 재현율(Recall) 등 다양한 지표를 활용하여 모델의 성능을 객관적으로 평가합니다.
-            </p>
-        </div>
-
-        <div class="card">
-            <h2 class="section-title">5. 결론 및 기대 효과 🚀</h2>
-            <p>
-                이 프로젝트는 컴퓨터 공학 전공자가 동물 복지라는 사회적 문제에 어떻게 기여할 수 있는지 보여주는 좋은 사례가 될 것입니다. 비록 소음, 개체별 발성 차이와 같은 한계가 존재하지만, 동물 스트레스에 대한 <strong>조기경보 시스템</strong>을 구축하여 질병 예방, 항생제 사용 감소, 그리고 더 나아가 동물 복지 개선에 실질적인 도움을 줄 수 있습니다. 이 보고서는 단순한 학술적 탐구를 넘어, <strong>기술과 따뜻한 관심이 결합될 때 세상이 어떻게 더 나은 방향으로 변화할 수 있는지</strong>에 대한 비전을 제시합니다.
-            </p>
-            <p>
-                다음 단계로, 특정 동물을 선정하여 파일럿 데이터 수집을 시작하고, 베이스라인 모델을 구축하는 실험을 진행할 것을 제안합니다.
-            </p>
+                <div id="group-result">
+                    <!-- 결과가 여기에 표시됩니다. -->
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        // 탭 전환 로직
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+
+        // Python의 random.seed()와 random.shuffle()을 JavaScript로 구현
+        function makeGroups(students, groupSize, seed1, seed2) {
+            // 두 시드를 합쳐서 하나의 시드 생성 (Python 로직과 동일)
+            const seed = seed1 * 101 + seed2;
+
+            // JavaScript에서 시드를 사용한 셔플 함수
+            // Linear Congruential Generator (LCG)를 활용하여 예측 가능한 난수 생성
+            const m = 2**32;
+            const a = 1664525;
+            const c = 1013904223;
+            let s = seed % m;
+            
+            function random() {
+                s = (a * s + c) % m;
+                return s / m;
+            }
+
+            // 학생 리스트 복사하여 원본 훼손 방지
+            const shuffledStudents = [...students];
+
+            // 셔플 알고리즘 (Fisher-Yates shuffle)
+            for (let i = shuffledStudents.length - 1; i > 0; i--) {
+                const j = Math.floor(random() * (i + 1));
+                [shuffledStudents[i], shuffledStudents[j]] = [shuffledStudents[j], shuffledStudents[i]];
+            }
+
+            // group_size 단위로 나누기
+            const groups = [];
+            for (let i = 0; i < shuffledStudents.length; i += groupSize) {
+                groups.push(shuffledStudents.slice(i, i + groupSize));
+            }
+
+            return groups;
+        }
+
+        // 버튼 클릭 시 실행될 함수
+        function generateGroups() {
+            const students = Array.from({length: 20}, (_, i) => i + 1);
+            const seed1 = parseInt(document.getElementById('seed1').value, 10);
+            const seed2 = parseInt(document.getElementById('seed2').value, 10);
+
+            // 유효성 검사
+            if (isNaN(seed1) || isNaN(seed2) || seed1 < 1 || seed1 > 100 || seed2 < 1 || seed2 > 100) {
+                // 경고창 대신 메시지 박스로 대체
+                const resultDiv = document.getElementById('group-result');
+                resultDiv.innerHTML = '<p style="color: #fc8181; font-weight: bold;">시드값은 1에서 100 사이의 정수여야 합니다.</p>';
+                return;
+            }
+
+            const groups = makeGroups(students, 4, seed1, seed2);
+            const resultDiv = document.getElementById('group-result');
+            resultDiv.innerHTML = ''; // 이전 결과 삭제
+
+            groups.forEach((group, index) => {
+                const p = document.createElement('p');
+                p.className = 'group-item';
+                p.textContent = `${index + 1}조: ${group.join(', ')}`;
+                resultDiv.appendChild(p);
+            });
+        }
+
+        // 페이지 로드 시 '종합 보고서' 탭 활성화
+        window.onload = function() {
+            showTab('report');
+        };
+    </script>
 </body>
 </html>
